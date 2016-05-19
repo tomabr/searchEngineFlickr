@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The Flickr Search Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet" href="stylesheets/css/main.css">
+    <script src="javascripts/angular.min.js"></script>
+    <script src="javascripts/jquery-2.2.3.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body ng-app="mySearch" class="container">
+    <main ng-controller="ApplicationController" class="main">
+      <h1 class="main__head"> Search on Flickr, click photo, add to the favourites</h1>
+      <div class="search" ng-controller="SearchController">
+        <form name="searchPhotos">
+          <label> Search term:
+            <input type="text" placeholder="Please insert title" ng-model="searchTerm" />
+          </label>
+          <input type="submit" value="Search" ng-click="search()" class="search__button"/>
+          <input type="button" ng-click="reset()" value="Reset" ng-click="Reset" class="search__button --reset"/>
+        </form>
+
+        <div class="result" scroll ng-show="!!photos">
+          <div ng-repeat="photo in photos track by $index" class="photo">
+              <img src="{{photo.url}}" title="{{photo.title}}" alt="" ng-click="addToFavourite(photo)" class="photo__item --clickable"/>
+          </div>
+          <div class="error" ng-show="!!error">
+          {{error}}
+          </div>
+        </div>
+        <! --- /result -->
+      </div>
+      <! --- /search -->
+    </main>
+    <sidebar ng-controller="FavouriteListController" class="favourite">
+      <h2 class="favourite__head">Your Favourite Photos</h2>
+      <input type="button" ng-click="clearFavouritePhotos()" value="Clear favourite photos" class="favourite__button"/>
+      <div ng-repeat="photo in favouritePhotos track by $index" class="photo">
+          <img src="{{photo.url}}" title="{{photo.title}}" alt="" class="photo__item"/>
+      </div>
+    </sidebar>
+  </body>
+</html>
